@@ -12,7 +12,7 @@ SELECT * FROM stader.tabelldata d ;
 
 SELECT * FROM tittare.tabelldata_kon tk 
 
-SELECT * FROM prenumerationskalla.tabelldata t 
+SELECT * FROM prenumerationskalla.tabelldata t ;
 
 SELECT * FROM trafikkalla.tabelldata t ;
 

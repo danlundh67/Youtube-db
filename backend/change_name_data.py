@@ -1,8 +1,8 @@
 from pathlib import Path
 from shutil import copytree, rmtree
 
-raw_data_path = Path(__file__).parent / "raw_data"
-cleaned_data_path = Path(__file__).parent / "cleaned_data"
+raw_data_path = Path(__file__).parents[0] / "raw_data"
+cleaned_data_path = Path(__file__).parents[0] / "cleaned_data"
 
 if cleaned_data_path.is_dir():
     rmtree(cleaned_data_path)
