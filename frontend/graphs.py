@@ -13,6 +13,14 @@ class ViewsTrend:
         st.plotly_chart(fig)
 
 
+class ViewSubsciber:
+    def __init__(self) -> None:
+        self.df = QueryDatabase("SELECT * FROM marts.prenumeration").df
+        print(self.df)
 
+    def display_plot(self):
+        fig = px.bar(self.df, x="Prenumerationsstatus", y=["Visningstid (timmar)"])
+        st.markdown("## Antal visningar under senaste månaden")
+        st.plotly_chart(fig)
 # create more graphs here
 
