@@ -28,3 +28,9 @@ SELECT * FROM trafikkalla.tabelldata t ;
 
 SELECT * FROM operativsystem.tabelldata t ;
 
+
+SELECT
+	*
+FROM
+	information_schema.schemata;
+

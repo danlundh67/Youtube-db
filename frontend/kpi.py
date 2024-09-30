@@ -24,4 +24,22 @@ class ContentKPI:
 
 # create more KPIs here
 class DeviceKPI:
-    pass 
+    def __init__(self) -> None:
+        self._content = QueryDatabase("SELECT * FROM marts.device_summary ORDER BY Visningstid_timmar DESC OFFSET 1;").df
+    
+    def display_content(self):
+        df = self._content
+        st.markdown("The different devices used")
+
+        st.dataframe(df)
+    
+
+class ViewersAge:
+    def __init__(self) -> None:
+        self._content = QueryDatabase("SELECT * FROM marts.viewer_age;").df
+
+    def display_content(self):
+        df = self._content
+        st.markdown("The viewers age span")
+
+        st.dataframe(df)

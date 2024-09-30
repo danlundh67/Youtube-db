@@ -12,5 +12,7 @@ class ViewsTrend:
         st.markdown("## Antal visningar under senaste månaden")
         st.plotly_chart(fig)
 
+
+
 # create more graphs here
 
