@@ -1,0 +1,12 @@
+
+
+.dataframe th {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.dataframe {
+    width: 70%;
+    margin: auto;
+}
+    

@@ -7,6 +7,7 @@ class ContentKPI:
 
     def display_content(self):
         df = self._content
+        html=df.to_html(classes='mystyle')
         st.markdown("## KPIer för videor")
         st.markdown("Nedan visas KPIer för totalt antal")
 
@@ -20,6 +21,7 @@ class ContentKPI:
         for col, kpi in zip(st.columns(len(kpis)), kpis):
             with col: 
                 st.metric(kpi, round(kpis[kpi]))
+
         st.dataframe(df)
 
 # create more KPIs here
@@ -29,7 +31,8 @@ class DeviceKPI:
     
     def display_content(self):
         df = self._content
-        st.markdown("The different devices used")
+        
+        st.markdown("Vilka enhetstyper har används")
 
         st.dataframe(df)
     
@@ -40,6 +43,6 @@ class ViewersAge:
 
     def display_content(self):
         df = self._content
-        st.markdown("The viewers age span")
+        st.markdown("Tittarnas ålerderfördelning")
 
         st.dataframe(df)
