@@ -7,7 +7,7 @@ class ContentKPI:
 
     def display_content(self):
         df = self._content
-        html=df.to_html(classes='mystyle')
+        #html=df.to_html(classes='mystyle')
         st.markdown("## KPIer för videor")
         st.markdown("Nedan visas KPIer för totalt antal")
 

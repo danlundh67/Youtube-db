@@ -25,11 +25,12 @@ class ViewSubsciber:
         self.df['Genomsnittlig visningslängd']=self.df['Genomsnittlig visningslängd'].apply(time_to_seconds)
 
     def display_plot(self):
+        self.df.rename(columns={"Prenumerationsstatus":"Status","Visningstid (timmar)": "Total visningstid (h)", 'Visningar':'Visat (antal ggr)','Genomsnittlig visningslängd':'Medel visningstid (s)'}, inplace=True)
         fig = px.bar(self.df,
-                     x='Prenumerationsstatus', 
-                     y=['Visningstid (timmar)','Visningar','Genomsnittlig visningslängd'], 
+                     x='Status', 
+                     y=['Total visningstid (h)','Visat (antal ggr)','Medel visningstid (s)'], 
                      barmode="group", 
-                     labels={'Visningstid (timmar)': 'Showed (hours)', 'Visningar':'Showed (# of times)','Genomsnittlig visningslängd':'Average showtime (s)'},)
+                     labels={"value":""},)
         
         fig.update_legends(title='',)
         st.markdown("## Visningstid (h), antal visningar och genomsnittlig tittartid (s) under senaste månaden")
@@ -37,4 +38,26 @@ class ViewSubsciber:
 
 
 class SelectView:
-    pass
+    def __init__(self) -> None:
+        self._content = QueryDatabase("SELECT * FROM marts.content_view_time;").df
+
+    def display_plot(self):
+
+        
+
+        df = self._content
+        #html=df.to_html(classes='
+
+        kpis = {
+            "videor": len(dmystyle')f),
+            "visade timmar": df["Visningstid_timmar"].sum(),
+            "prenumeranter": df["Prenumeranter"].sum(),
+            "exponeringar": df["Exponeringar"].sum(),
+        }
+
+        for col, kpi in zip(st.columns(len(kpis)), kpis):
+            with col: 
+                st.metric(kpi, round(kpis[kpi]))
+
+        st.dataframe(df)
+
