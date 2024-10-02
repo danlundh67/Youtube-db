@@ -35,7 +35,7 @@ class ViewSubsciber:
                      labels={"value":""},)
         
         fig.update_legends(title='',)
-        st.markdown("## Visningstid (h), antal visningar och genomsnittlig tittartid (s) under senaste månaden")
+        st.markdown("## Prenumerationsstatus: Visningstid (h), antal visningar och genomsnittlig tittartid (s) under senaste månaden")
         st.plotly_chart(fig)
 
 
@@ -68,11 +68,8 @@ class SelectView:
             'Klickfrekvens_exponering_%': [self.df['Klickfrekvens_exponering_%'].median()]
         })
         
-        #st.dataframe(avgs)
 
         combined_df=pd.concat([df2,avgs], axis=0)
-
-        #df_melted = pd.melt(df2, var_name='Metric', value_name='Value')
 
         st.dataframe(combined_df)
 
@@ -80,10 +77,9 @@ class SelectView:
                             value_vars=['Visningar', 'Visningstid_timmar', 'Exponeringar', 'Klickfrekvens_exponering_%'], 
                             var_name='Metric', value_name='Value')
 
-        # Create a Plotly bar chart
         fig = px.bar(melted_df, x='Metric', y='Value', color='Videotitel', 
                      barmode='group', labels={'Value': 'Value', 'Metric': 'Metrics'}, 
-                     title=f"Metrics for '{selected}' and Genomsnitt")
+                     title=f"Data för videon '{selected}' jämfört genomsnitt (median)")
 
         st.plotly_chart(fig)
 

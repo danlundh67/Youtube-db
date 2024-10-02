@@ -43,14 +43,8 @@ class ViewersAge:
 
     def display_content(self):
         df = self._content
-        st.markdown("Tittarnas ålerderfördelning")
+        st.markdown("Tittarnas åldersfördelning")
 
         st.dataframe(df)
 
-class MoviesAvailable:
-    def __init__(self):
-        self._df = SummerGames().df
 
-    @property
-    def noc(self):
-        return self._df["NOC"].unique()
