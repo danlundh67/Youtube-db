@@ -1,6 +1,7 @@
 from utils.query_database import QueryDatabase
 import plotly.express as px
 import streamlit as st 
+import pandas as pd
 
 class ViewsTrend:
     def __init__(self) -> None:
@@ -21,6 +22,7 @@ def time_to_seconds(time_str):
 class ViewSubsciber:
     def __init__(self) -> None:
         self.df = QueryDatabase("SELECT * FROM marts.prenumeration ORDER BY Visningar DESC OFFSET 1").df
+
         # print(self.df['Genomsnittlig visningslängd'].apply(time_to_seconds))
         self.df['Genomsnittlig visningslängd']=self.df['Genomsnittlig visningslängd'].apply(time_to_seconds)
 
@@ -39,25 +41,50 @@ class ViewSubsciber:
 
 class SelectView:
     def __init__(self) -> None:
-        self._content = QueryDatabase("SELECT * FROM marts.content_view_time;").df
-
-    def display_plot(self):
-
+        self.df = QueryDatabase("SELECT * FROM marts.content_view_time;").df
         
 
-        df = self._content
-        #html=df.to_html(classes='
+    def display_plot(self):
+        st.markdown("## Analys av video")
+        selected = st.selectbox("Välj en titel", options=self.df['Videotitel'])
+        
+        #['Visningar','visade timmar','Exponeringar', 'Klickfrekvens_exponeringar']
+        
+        pdf=self.df
 
-        kpis = {
-            "videor": len(dmystyle')f),
-            "visade timmar": df["Visningstid_timmar"].sum(),
-            "prenumeranter": df["Prenumeranter"].sum(),
-            "exponeringar": df["Exponeringar"].sum(),
-        }
+        st.markdown(f"Vald title: {selected}")
+        
+        required_columns = ['Videotitel','Visningar', 'Visningstid_timmar', 'Exponeringar', 'Klickfrekvens_exponering_%']
+        
+        df2 = self.df.loc[self.df['Videotitel'] == selected, required_columns]
+            
+        #st.dataframe(df2)
 
-        for col, kpi in zip(st.columns(len(kpis)), kpis):
-            with col: 
-                st.metric(kpi, round(kpis[kpi]))
+        avgs = pd.DataFrame({
+            'Videotitel': ['Genomsnitt'],  # Label row for averages
+            'Visningar': [self.df['Visningar'].median()],
+            'Visningstid_timmar': [self.df['Visningstid_timmar'].median()],
+            'Exponeringar': [self.df['Exponeringar'].median()],
+            'Klickfrekvens_exponering_%': [self.df['Klickfrekvens_exponering_%'].median()]
+        })
+        
+        #st.dataframe(avgs)
 
-        st.dataframe(df)
+        combined_df=pd.concat([df2,avgs], axis=0)
+
+        #df_melted = pd.melt(df2, var_name='Metric', value_name='Value')
+
+        st.dataframe(combined_df)
+
+        melted_df = pd.melt(combined_df, id_vars=['Videotitel'], 
+                            value_vars=['Visningar', 'Visningstid_timmar', 'Exponeringar', 'Klickfrekvens_exponering_%'], 
+                            var_name='Metric', value_name='Value')
+
+        # Create a Plotly bar chart
+        fig = px.bar(melted_df, x='Metric', y='Value', color='Videotitel', 
+                     barmode='group', labels={'Value': 'Value', 'Metric': 'Metrics'}, 
+                     title=f"Metrics for '{selected}' and Genomsnitt")
+
+        st.plotly_chart(fig)
+
 
