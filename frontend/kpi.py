@@ -31,11 +31,11 @@ class DeviceKPI:
     
     def display_content(self):
         df = self._content
-        
-        st.markdown("Vilka enhetstyper har används")
+        st.markdown("## Enhetstyper")
+        st.markdown("Nedan visas vilka enhetstyper som har används")
 
         st.dataframe(df)
-    
+        st.markdown("Observera minsta och största värdena i repektive kategori")
 
 class ViewersAge:
     def __init__(self) -> None:
@@ -43,7 +43,7 @@ class ViewersAge:
 
     def display_content(self):
         df = self._content
-        st.markdown("Tittarnas åldersfördelning")
+        st.markdown("## Tittarnas åldersfördelning")
 
         st.dataframe(df)
 

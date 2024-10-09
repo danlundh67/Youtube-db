@@ -78,9 +78,10 @@ p {
 }
 
 .stImage {
-  max-width: 30%;
+  align-content: center;
+  margin-left: 25%;
+  max-width: 25%;
 }
-
 
 
 /* to counter lobotomized owl to remove top margin */
